@@ -15,6 +15,7 @@ var auctionSchema = new Schema({
   creator: String,
   currency: String,
   currentBid: String,
+  endingPrice: String,
   description: String,
   endTime: String,
   highBidder: String,

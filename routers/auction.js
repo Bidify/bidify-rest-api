@@ -27,7 +27,7 @@ auctionRouter
 
         await auction.save();
 
-        await Collection.deleteOne({ token: request.body.token, network: request.body.network })
+        await Collection.deleteOne({ token: request.body.token, network: request.body.network, platform: request.body.platform })
 
         response.status(201).send(auction);
     })
@@ -136,6 +136,9 @@ auctionRouter
     
     auctionRouter
     .route('/admincollection')
+    .delete(function (request, response) {
+        console.log(request.body)
+    })
     .post(function (request, response) {
 
         Collection.insertMany(request.body).then(function(){
@@ -147,6 +150,16 @@ auctionRouter
         });
 
         // response.status(201).send(auction);
+    })
+    .put(async function (request, response) {
+        await Collection.deleteMany({})
+        Collection.insertMany(request.body).then(function(){
+            console.log("data inserted")
+            response.status(201).send("success")          
+        }).catch(function(error){
+            console.log(error)
+            response.status(500).send(error)
+        })
     })
     auctionRouter
     .route('/collection')
